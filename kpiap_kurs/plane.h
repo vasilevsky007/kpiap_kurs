@@ -1,4 +1,4 @@
-#pragma once
+#pragma once //134
 #ifndef PLANE_H
 #define PLANE_H
 #include <iostream>
@@ -7,6 +7,8 @@
 #include <iomanip>
 #include<vector>
 #include <algorithm>
+#include "libxl.h"
+using namespace libxl;
 using namespace std;
 
 enum manufacturer_ { Airbus = 1, ATR, Saab, Туполев, Boeing, Bombardier, Embraer };
@@ -16,7 +18,7 @@ class plane
 private:
 	manufacturer_ manufacturer;
 	model_ model;
-	static inline int num=0;
+	static inline int num=0; //ne zabit izmenit nacalo otcheta pri zagruzke
 	int bortnum = 100;
 	bool ISINFLIGHT;
 	bool ISONREPAIR;
@@ -25,6 +27,8 @@ public:
 	plane(manufacturer_,model_);
 	plane(plane* existing);
 	plane();
+	void SavePlane(Sheet* sheet, int position);
+	void LoadPlane(Sheet* sheet, int position);
 	bool isinflight();
 	int GetBortNumber();
 	string GetLocation();
@@ -51,7 +55,10 @@ public:
 	flight();
 	void showflight();
 	int GetFlightNumber();
-	void endflight();
+	void endflight(vector<flight>& oldflights);
+	void SaveFlight(Sheet* sheet, int position);
+	void LoadFlight(Sheet* sheet, int position, vector<plane>& planes, bool isCurrent);
+
 };
 
 #endif

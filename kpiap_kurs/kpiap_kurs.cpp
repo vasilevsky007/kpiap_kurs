@@ -1,7 +1,4 @@
-﻿// kpiap_kurs.cpp : Этот файл содержит функцию "main". Здесь начинается и заканчивается выполнение программы.
-//
-#include "plane.h"
-
+﻿#include "plane.h"
 int inputint() {
     int a;
     while (true) {
@@ -19,19 +16,82 @@ int inputint() {
     }
 }
 
+void SaveToFile(vector<plane>& planes, vector<flight>& flights, vector<flight>& oldflights) {
+    Book* book = xlCreateBook();
+    Sheet* sheet1 = book->addSheet(L"Planes");
+    if (sheet1)
+    {
+        sheet1->writeNum(1, 1, planes.size());
+        for (int i = 0; i < planes.size(); i++) {
+            planes[i].SavePlane(sheet1, i+2);
+        }
+    }
+    Sheet* sheet2 = book->addSheet(L"Flights");
+    if (sheet2)
+    {
+        sheet2->writeNum(1, 1, flights.size());
+        for (int i = 0; i < flights.size(); i++) {
+            flights[i].SaveFlight(sheet2, i+2);
+        }        
+    }
+    Sheet* sheet3 = book->addSheet(L"OldFlights");
+    if (sheet3)
+    {
+        sheet3->writeNum(1, 1, oldflights.size());
+        for (int i = 0; i < oldflights.size(); i++) {
+            oldflights[i].SaveFlight(sheet3, i+2);
+        }
+    }
+    book->save(L"Data.xls");
+    book->release();
+    ;
+}
+
+void LoadFromFile(vector<plane>& planes, vector<flight>& flights, vector<flight>& oldflights) {
+    Book* book = xlCreateBook();
+    book->load(L"Data.xls");
+    plane pl;
+    flight fl;
+    Sheet* sheet1 = book->getSheet(0);
+    if (sheet1){
+        double cap = sheet1->readNum(1, 1);
+        for (int i = 0; i < cap; i++) {
+            planes.push_back(pl);
+            planes[i].LoadPlane(sheet1, i+2);
+        }
+    }
+    Sheet* sheet2 = book->getSheet(1);
+    if (sheet2) {
+        double cap = sheet2->readNum(1, 1);
+        for (int i = 0; i < cap; i++) {
+            flights.push_back(fl);
+            flights[i].LoadFlight(sheet2, i + 2,planes,true);
+        }
+    }
+    Sheet* sheet3 = book->getSheet(2);
+    if (sheet3) {
+        double cap2 = sheet3->readNum(1, 1);
+        for (int i = 0; i < cap2; i++) {
+            oldflights.push_back(fl);
+            oldflights[i].LoadFlight(sheet3, i + 2, planes, false);
+        }
+    }
+        book->release();
+}
 
 
 int main()
 {
 	setlocale(LC_ALL, "russian");
-    vector<plane> planes;
-    vector<flight> flights;
-	int k;
 	bool flag=true;
 	while (flag) {
+        vector<plane> planes;
+        vector<flight> flights;
+        vector<flight> oldflights;
         system("CLS");
-        cout << "\nМЕНЮ\n1)добавить самолет\n2)показать все самолеты\n3)изменить данные о самолете\n4) удалить самолет\n5)Добавить полет\n6)Показать активные полёты\n7)Завершить полёт\n8)отсортировать самолеты\n0)выход\n";
-            k = inputint();
+        LoadFromFile(planes, flights, oldflights);
+        cout << "\nМЕНЮ\n1)добавить самолет\n2)показать все самолеты\n3)изменить данные о самолете\n4) удалить самолет\n5)Добавить рейс\n6)Показать активные рейсы\n7)Завершить рейс\n8)Показать завершенные рейсы\n9)отсортировать самолеты\n0)выход\n";
+            int k = inputint();
             plane newplane, *selected=nullptr;
             flight newflight;
             int id,n;
@@ -119,13 +179,18 @@ int main()
                     if (flights[i].GetFlightNumber() == id) n = i;
                 }
                 if (n == -1) {
-                    cout << "Не было найдено самолета с таким бортовым номером" << endl;
+                    cout << "Нет активного полёта с таким номером" << endl;
                     goto SearchFF;
                 }
-                flights[n].endflight();
+                flights[n].endflight(oldflights);
                 flights.erase(flights.begin() + n);
                 break;
             case 8:
+                cout << setw(15) << "№ Рейса" << setw(15) << "Бортовой №" << setw(15) << "Отправление" << setw(15) << "Прибытие" << endl;
+                for (int i = 0; i < oldflights.size(); i++) oldflights[i].showflight();
+                system("pause");
+                break;
+            case 9:
                 n = -1;
                 while (n != 0) {
                     cout << "сортировка\n1)по бортовому номеру\n2)по местонахождению\n0)выход" << endl;
@@ -138,17 +203,8 @@ int main()
                 flag = false;
                 break;
             }
-	}
 
+            SaveToFile(planes,flights,oldflights);
 }
-
-// Запуск программы: CTRL+F5 или меню "Отладка" > "Запуск без отладки"
-// Отладка программы: F5 или меню "Отладка" > "Запустить отладку"
-
-// Советы по началу работы 
-//   1. В окне обозревателя решений можно добавлять файлы и управлять ими.
-//   2. В окне Team Explorer можно подключиться к системе управления версиями.
-//   3. В окне "Выходные данные" можно просматривать выходные данные сборки и другие сообщения.
-//   4. В окне "Список ошибок" можно просматривать ошибки.
-//   5. Последовательно выберите пункты меню "Проект" > "Добавить новый элемент", чтобы создать файлы кода, или "Проект" > "Добавить существующий элемент", чтобы добавить в проект существующие файлы кода.
-//   6. Чтобы снова открыть этот проект позже, выберите пункты меню "Файл" > "Открыть" > "Проект" и выберите SLN-файл.
+    return 0;
+}
