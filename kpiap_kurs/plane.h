@@ -1,4 +1,4 @@
-#pragma once //134
+#pragma once 
 #ifndef PLANE_H
 #define PLANE_H
 #include <iostream>
@@ -12,7 +12,7 @@ using namespace libxl;
 using namespace std;
 
 enum manufacturer_ { Airbus = 1, ATR, Saab, Туполев, Boeing, Bombardier, Embraer };
-enum model_ { A220 = 1, A320, A350, A380, ATR42, ATR72, SAAB340, SAAB200, TY204, TY214, TY324, TY330, TY134, TY154, BOEING737, BOEING747, BOEING787, CRJ200, CRJ700, EMB121, ERJ135, ERJ140, ERJ145, E175, E195 };
+	enum model_ { A220 = 1, A320, A350, A380, ATR42, ATR72, SAAB340, SAAB200, TY204, TY214, TY324, TY330, TY134, TY154, BOEING737, BOEING747, BOEING787, CRJ200, CRJ700, EMB121, ERJ135, ERJ140, ERJ145, E175, E195 };
 class plane
 {
 private:
@@ -24,7 +24,6 @@ private:
 	bool ISONREPAIR;
 	string location;
 public:
-	plane(manufacturer_,model_);
 	plane(plane* existing);
 	plane();
 	void SavePlane(Sheet* sheet, int position);
