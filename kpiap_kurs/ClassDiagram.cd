@@ -1,0 +1,46 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1" MembersFormat="FullSignature">
+  <Class Name="plane">
+    <Position X="0.5" Y="6.5" Width="6" />
+    <TypeIdentifier>
+      <HashCode>ABAAACAKAAAAQAEAAAAAAAACAAAAAgACAAAEAEBIAAA=</HashCode>
+      <FileName>plane.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="flight">
+    <Position X="0.5" Y="2.75" Width="6" />
+    <TypeIdentifier>
+      <HashCode>gAAAAAAYAAQAAAAAAIAAAgAIAAAIAAAABCCAIQAAAAA=</HashCode>
+      <FileName>plane.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="synch">
+    <Position X="0.5" Y="1.25" Width="6" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAA=</HashCode>
+      <FileName>synch.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Menu">
+    <Position X="9.5" Y="0.75" Width="6" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAgAAABAAABAEAAAAAAAAAAMAiAAmAAQAgAAAgI=</HashCode>
+      <FileName>Menu.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Enum Name="manufacturer_">
+    <Position X="8" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>gAAAIAQBABAAIAAAAAAAIAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>plane.h</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="model_">
+    <Position X="6.5" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAggQABAggEgAAAQKAAAQfAAAAAAAAgAAIAAQAAAA=</HashCode>
+      <FileName>plane.h</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
